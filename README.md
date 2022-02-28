@@ -1,1 +1,1 @@
-# en2550_assignment_1
+EN2550 Assignment 1 on Intensity Transformations and Neighborhood Filtering
