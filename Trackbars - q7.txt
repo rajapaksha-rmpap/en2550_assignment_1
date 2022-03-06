@@ -1,0 +1,29 @@
+def doNothing(val): 
+    pass 
+
+# open the image 
+im = cv.imread("daisy.jpg")
+mask = np.zeros(im.shape[:2], dtype = np.uint8)
+bdgModel = np.zeros((1, 65), dtype = np.float32)
+fdgModel = np.zeros((1, 65), dtype = np.float32)
+
+# create a set of trackbars to real-time adjust the foregroud rectangle.
+cv.namedWindow("Trackbars"); cv.resizeWindow("Trackbars", 700, 160)
+cv.createTrackbar("top right X", "Trackbars", 0, im.shape[1], doNothing)
+cv.createTrackbar("top right Y", "Trackbars", 0, im.shape[0], doNothing)
+cv.createTrackbar("bot left X", "Trackbars", im.shape[1], im.shape[1], doNothing)
+cv.createTrackbar("bot left Y", "Trackbars", im.shape[0], im.shape[0], doNothing)
+
+while True:
+    x1 = cv.getTrackbarPos("top right X", "Trackbars")
+    y1 = cv.getTrackbarPos("top right Y", "Trackbars")
+    x2 = cv.getTrackbarPos("bot left X", "Trackbars")
+    y2 = cv.getTrackbarPos("bot left Y", "Trackbars")
+
+    rect = im[y1:y2, x1:x2]
+    cv.imshow("Foreground Rectangle", rect)
+    
+    key = cv.waitKey(1) 
+    if key == 27: break
+
+cv.destroyAllWindows()
